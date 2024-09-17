@@ -105,9 +105,9 @@ export default function CalendarScreen() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={{ uri: "https://www.wallpaperflare.com/static/478/936/869/morning-calm-sea-waves-beach-sand-australia-wallpaper.jpg" }}
+        source={{ uri:"https://static.vecteezy.com/system/resources/previews/027/105/997/non_2x/bright-adhesive-notes-on-cork-bulletin-board-free-photo.jpg" }}
         style={styles.imageBackground}
-        resizeMode="cover" // Ensure image covers the full screen
+        imageStyle={{ opacity: 0.4 }} // Adjust transparency here
       >
         <View style={styles.calendarWrapper}>
           <Calendar
@@ -181,6 +181,7 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1, // Full screen height
+    backgroundColor: 'transparent',
   },
   imageBackground: {
     flex: 1, // Ensures the background image covers the whole screen
@@ -188,8 +189,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   calendarWrapper: {
-    width: 800, // Width of the calendar
-    height: 330, // Height of the calendar
+    width: 1200, // Width of the calendar
+    height: 430, // Height of the calendar
     marginBottom: 20, // Margin below the calendar
     backgroundColor: 'white', // Semi-transparent background color
     borderRadius: 10,
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
     flexShrink: 1, // Allow the text to shrink to fit within the container
   },
   addTaskForm: {
-    marginTop: 20,
+    marginTop: 10,
   },
   input: {
     borderColor: '#ccc',
@@ -266,8 +267,8 @@ const styles = StyleSheet.create({
     padding: 10, // Increase padding for more space inside the input box
     marginBottom: 10,
     borderRadius: 5,
-    width: '300%', // Make input box full width of the container
-    height: 60, // Increase height of the input box
+    width: '200%', // Make input box full width of the container
+    height: 40, // Increase height of the input box
     alignSelf:'center',
     fontWeight: 'bold',
     fontSize:20,

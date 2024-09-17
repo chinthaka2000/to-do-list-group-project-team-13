@@ -12,12 +12,17 @@ import { Session, User } from '@supabase/supabase-js';
 WebBrowser.maybeCompleteAuthSession();
 
 interface LoginProps {
+  route: {
+    params: {
+      themeColor?: string;
+    };
+  };
   onLoginSuccess: (user: User) => void;
 }
 
 const { width, height } = Dimensions.get('window');
 
-const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+const Login: React.FC<LoginProps> = ({ route, onLoginSuccess }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -132,8 +137,11 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     </TouchableOpacity>
   );
 
+  // Retrieve the theme color from route params or use a default value
+  const themeColor = route.params?.themeColor || '#6C63FF';
+
   return (
-    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+    <Animated.View style={[styles.container, { opacity: fadeAnim, backgroundColor: themeColor }]}>
       <Image source={require('../assets/logo.png')} style={styles.logo} />
       <Text style={styles.title}>To-do List App</Text>
       <Text style={styles.subtitle}>Organize Your Life One Task At a Time</Text>
@@ -141,7 +149,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       {error && <Text style={styles.error}>{error}</Text>}
 
       <View style={styles.inputContainer}>
-        <Ionicons name="mail-outline" size={24} color="#6C63FF" />
+        <Ionicons name="mail-outline" size={24} color={themeColor} />
         <TextInput
           style={styles.textInput}
           placeholder="Email"
@@ -154,7 +162,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       </View>
 
       <View style={styles.inputContainer}>
-        <Ionicons name="lock-closed-outline" size={24} color="#6C63FF" />
+        <Ionicons name="lock-closed-outline" size={24} color={themeColor} />
         <TextInput
           style={styles.textInput}
           placeholder="Password"
@@ -166,7 +174,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       </View>
 
       <TouchableOpacity onPress={() => Alert.alert('Forgot Password', 'Redirect to forgot password screen')}>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        <Text style={[styles.forgotPassword, { color: themeColor }]}>Forgot Password?</Text>
       </TouchableOpacity>
 
       <View style={styles.buttonContainer}>
@@ -174,9 +182,10 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           onPress={handleLogin}
           text={loading ? "Logging in..." : "Login"}
           style={styles.loginButton}
+          colors={[themeColor, '#4C46B3']}
           disabled={loading}
         />
-        {loading && <ActivityIndicator size="small" color="#6C63FF" style={styles.loadingIndicator} />}
+        {loading && <ActivityIndicator size="small" color={themeColor} style={styles.loadingIndicator} />}
       </View>
 
       <Text style={styles.orText}>Or Login Using</Text>
@@ -206,7 +215,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
-    backgroundColor: '#fff',
   },
   logo: {
     width: width * 0.25,  // Scale the logo based on screen width
@@ -240,7 +248,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   forgotPassword: {
-    color: '#6C63FF',
     alignSelf: 'flex-end',
   },
   buttonContainer: {
@@ -275,7 +282,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 50,
     height: 50,
-    
   },
   socialIcon: {
     width: 24,

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Switch, StyleSheet, FlatList, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, Switch, StyleSheet, FlatList, ImageBackground } from 'react-native';
 import { supabase } from '../supabase'; // Adjust the path to your Supabase client
 
-const SettingsScreen = () => {
+// Define 5 color options
+const colorOptions = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#F4C724'];
+
+const SettingsScreen = ({ navigation }) => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [selectedColor, setSelectedColor] = useState('#FF5733'); // Default color
 
   useEffect(() => {
     // Fetch tasks from Supabase
@@ -13,7 +17,7 @@ const SettingsScreen = () => {
         const { data, error } = await supabase
           .from('tasks')
           .select('id, text')
-          .eq('notification', true); // Assume there's a 'notification' column to filter tasks with notifications
+          .eq('notification', true); // Assume there's a 'notification' column
 
         if (error) throw error;
         setTasks(data || []);
@@ -27,17 +31,23 @@ const SettingsScreen = () => {
 
   const toggleNotifications = () => {
     setNotificationsEnabled(prevState => !prevState);
-    // Here you might also handle saving the state to your backend or local storage
+  };
+
+  const applyColor = (color) => {
+    setSelectedColor(color);
+    // Save the selected color to local storage or Supabase as needed
+    navigation.navigate('LoginScreen', { themeColor: color });
   };
 
   return (
     <ImageBackground
-      //source={{ uri: 'https://cdn-iladnmf.nitrocdn.com/GYljxNFGNVuPmaLlSFHIKBSpnXOurDpg/assets/images/optimized/rev-5d47944/www.centeredrecoveryprograms.com/wp-content/uploads/2023/12/goals-1024x576.png' }}
-      style={styles.container}
+      source={{ uri: 'https://static.vecteezy.com/system/resources/previews/027/105/997/non_2x/bright-adhesive-notes-on-cork-bulletin-board-free-photo.jpg' }}
+      style={styles.background}
+      imageStyle={{ opacity: 0.3 }} // Adjust transparency here
     >
       <View style={styles.content}>
         <View style={styles.notificationContainer}>
-          <Text style={styles.label}>Enable task Notifications</Text>
+          <Text style={styles.label}>Enable task notifications</Text>
           <Switch
             value={notificationsEnabled}
             onValueChange={toggleNotifications}
@@ -47,7 +57,7 @@ const SettingsScreen = () => {
 
         {tasks.length > 0 && (
           <View style={styles.tasksContainer}>
-            <Text style={styles.subHeader}>Tasks with Notifications:</Text>
+            <Text style={styles.subHeader}>Tasks with notifications:</Text>
             <FlatList
               data={tasks}
               keyExtractor={(item) => item.id.toString()}
@@ -59,20 +69,31 @@ const SettingsScreen = () => {
             />
           </View>
         )}
+
+        <Text style={styles.subHeader}>Choose login page theme color:</Text>
+        <View style={styles.colorOptionsContainer}>
+          {colorOptions.map((color) => (
+            <TouchableOpacity
+              key={color}
+              style={[styles.colorOption, { backgroundColor: color }]}
+              onPress={() => applyColor(color)}
+            />
+          ))}
+        </View>
       </View>
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#70B0E0', // Ensure background color is transparent
+    justifyContent: 'center', // Center content vertically
   },
   content: {
     flex: 1,
-    zIndex: 1,
+    padding: 20,
+    backgroundColor: 'transparent', // Make content background transparent
   },
   notificationContainer: {
     flexDirection: 'row',
@@ -80,16 +101,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontSize: 38,
-    marginRight: 10,
+    fontSize: 50,
+    marginRight: 20,
+    fontWeight: 'bold',
+    color: '#000', // Set text color to ensure it's readable on the background
   },
   tasksContainer: {
-    marginTop: 20,
+    marginTop: 50,
   },
   subHeader: {
-    fontSize: 18,
+    fontSize: 50,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
+    color: '#000', // Set text color to ensure it's readable on the background
   },
   taskItem: {
     padding: 15,
@@ -98,8 +122,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   taskText: {
-    fontSize: 16,
+    fontSize: 40,
     fontWeight: 'bold',
+  },
+  colorOptionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginVertical: 20,
+  },
+  colorOption: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
 });
 

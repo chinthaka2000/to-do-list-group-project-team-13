@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, FlatList, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TextInput, FlatList, TouchableOpacity, Text, StyleSheet, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import icons
 import { supabase } from '../supabase'; // Supabase client initialization
 import RNPickerSelect from 'react-native-picker-select'; // For category dropdown
@@ -121,76 +121,82 @@ const TodoList = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* Category Filter */}
-      <View style={styles.categoryContainer}>
-        {['All', 'Work', 'Personal', 'Shopping'].map((cat) => (
-          <TouchableOpacity
-            key={cat}
-            onPress={() => setCategory(cat)}
-            style={category === cat ? styles.activeCategory : styles.categoryButton}
-          >
-            <Text style={styles.categoryText}>{cat}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* Task List */}
-      <FlatList
-        data={tasks}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TodoItem
-            task={item}
-            deleteTask={deleteTask}
-            toggleCompleted={toggleCompleted}
-            editTask={editTask}
-          />
-        )}
-      />
-
-      {/* Plus Button and Input for Adding Task */}
-      {!isInputVisible ? (
-        <TouchableOpacity style={styles.plusButton} onPress={toggleInput}>
-          <Text style={styles.plusButtonText}>+</Text>
-        </TouchableOpacity>
-      ) : (
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.textInput}
-            value={text}
-            onChangeText={setText}
-            placeholder="New Task"
-            placeholderTextColor="#999"
-          />
-
-          {/* Category Selector for Adding Task */}
-          <RNPickerSelect
-            onValueChange={(value) => setTaskCategory(value)}
-            items={[
-              { label: 'Work', value: 'Work' },
-              { label: 'Personal', value: 'Personal' },
-              { label: 'Shopping', value: 'Shopping' },
-            ]}
-            value={taskCategory}
-            style={pickerStyles}
-          />
-
-          <TouchableOpacity style={styles.addButton} onPress={handleTask}>
-            <Text style={styles.addButtonText}>{isEditing ? 'Update' : 'Add'}</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.closeButton} onPress={toggleInput}>
-            <Text style={styles.closeButtonText}>Cancel</Text>
-          </TouchableOpacity>
+    <ImageBackground
+      source={{ uri: 'https://static.vecteezy.com/system/resources/previews/027/105/997/non_2x/bright-adhesive-notes-on-cork-bulletin-board-free-photo.jpg' }}
+      style={styles.background}
+      imageStyle={{ opacity: 0.3 }} // Adjust transparency here
+    >
+      <View style={styles.container}>
+        {/* Category Filter */}
+        <View style={styles.categoryContainer}>
+          {['All', 'Work', 'Personal', 'Shopping'].map((cat) => (
+            <TouchableOpacity
+              key={cat}
+              onPress={() => setCategory(cat)}
+              style={category === cat ? styles.activeCategory : styles.categoryButton}
+            >
+              <Text style={styles.categoryText}>{cat}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
-      )}
 
-      {/* Button to Delete All Completed Tasks */}
-      <TouchableOpacity style={styles.deleteAllButton} onPress={deleteCompletedTasks}>
-        <Text style={styles.deleteAllButtonText}>Delete All Completed</Text>
-      </TouchableOpacity>
-    </View>
+        {/* Task List */}
+        <FlatList
+          data={tasks}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <TodoItem
+              task={item}
+              deleteTask={deleteTask}
+              toggleCompleted={toggleCompleted}
+              editTask={editTask}
+            />
+          )}
+        />
+
+        {/* Plus Button and Input for Adding Task */}
+        {!isInputVisible ? (
+          <TouchableOpacity style={styles.plusButton} onPress={toggleInput}>
+            <Text style={styles.plusButtonText}>+</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.textInput}
+              value={text}
+              onChangeText={setText}
+              placeholder="New Task"
+              placeholderTextColor="#999"
+            />
+
+            {/* Category Selector for Adding Task */}
+            <RNPickerSelect
+              onValueChange={(value) => setTaskCategory(value)}
+              items={[
+                { label: 'Work', value: 'Work' },
+                { label: 'Personal', value: 'Personal' },
+                { label: 'Shopping', value: 'Shopping' },
+              ]}
+              value={taskCategory}
+              style={pickerStyles}
+            />
+
+            <TouchableOpacity style={styles.addButton} onPress={handleTask}>
+              <Text style={styles.addButtonText}>{isEditing ? 'Update' : 'Add'}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.closeButton} onPress={toggleInput}>
+              <Text style={styles.closeButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {/* Button to Delete All Completed Tasks */}
+        <TouchableOpacity style={styles.deleteAllButton} onPress={deleteCompletedTasks}>
+          <Text style={styles.deleteAllButtonText}>Delete All Completed</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -218,7 +224,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'transparent', // Make background transparent so image shows through
+  },
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
   },
   categoryContainer: {
     flexDirection: 'row',
@@ -229,7 +239,6 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#e0e0e0',
     borderRadius: 8,
-
   },
   activeCategory: {
     padding: 10,
@@ -290,7 +299,6 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderColor: '#fff',
     overflow: 'hidden',
-
   },
   plusButtonText: {
     color: '#fff',
@@ -339,30 +347,11 @@ const styles = StyleSheet.create({
     width: 200,
     height: 50,
     marginBottom: 20,
-    
   },
   deleteAllButtonText: {
     color: '#fffaf0',
     fontWeight: 'bold',
     fontSize: 16,
-
-  },
-  taskOverview: {
-    fontSize: 18,
-    color: '#666',
-    marginBottom: 30,
-  },
-  taskCount: {
-    fontSize: 16,
-    color: '#666',
-  },
-  completedTaskCount: {
-    fontSize: 16,
-    color: '#4CAF50',
-  },
-  uncompletedTaskCount: {
-    fontSize: 16,
-    color: '#FF6347',
   },
 });
 
@@ -430,7 +419,5 @@ const pickerStyles = StyleSheet.create({
     tintColor: '#333',
   },
 });
-
-
 
 export default TodoList;

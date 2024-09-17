@@ -94,7 +94,26 @@ export default function Login({ onLoginSuccess }) {
     }
   };
 
- 
+  // Function to handle forgot password
+  const handleForgotPassword = async () => {
+    if (!EmailValidator.validate(email)) {
+      setError('Please enter a valid email to reset your password');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: 'yourapp://reset-password', // Change this to your app's redirect URL
+      });
+      if (error) throw error;
+      setError('Password reset link sent. Check your email!');
+    } catch (err) {
+      setError('Error sending password reset email: ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const GradientButton = ({ onPress, text, style, colors, disabled }) => (
     <TouchableOpacity onPress={onPress} style={style} disabled={disabled}>
@@ -142,7 +161,7 @@ export default function Login({ onLoginSuccess }) {
         />
       </View>
 
-      <TouchableOpacity onPress={() => {/* Handle forgot password */}}>
+      <TouchableOpacity onPress={handleForgotPassword}>
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
 
@@ -159,7 +178,7 @@ export default function Login({ onLoginSuccess }) {
       <Text style={styles.orText}>Or Login Using</Text>
       
       <View style={styles.socialButtonsContainer}>
-        <TouchableOpacity onPress={handleGoogleLogin} style={styles.socialButton} disabled={loading}>
+        <TouchableOpacity onPress={() => promptAsync()} style={styles.socialButton} disabled={loading}>
           <Image source={require('../assets/google-icon.png')} style={styles.socialIcon} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialButton} disabled={loading}>
@@ -195,27 +214,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#4d9de0',
-    textAlign: 'center',
-    marginTop: 20,
-    marginBottom: 20,
-    width: '80%',
-    textAlign: 'center',
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    marginTop: 20,
-  },
-  appName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 10,
-    color: '#4d9de0',
-  },
-  slogan: {
-    fontSize: 12,
-    color: '#7f8fa6',
-    marginTop: 5,
   },
   subtitle: {
     fontSize: 16,
@@ -269,38 +267,31 @@ const styles = StyleSheet.create({
   socialButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   socialButton: {
     marginHorizontal: 10,
+    padding: 10,
+  },
+  socialIcon: {
+    width: 24,
+    height: 24,
   },
   signupContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   signupText: {
     color: '#666',
   },
   signupLink: {
     color: '#6C63FF',
-    fontWeight: 'bold',
   },
   disabledText: {
     opacity: 0.7,
   },
   error: {
     color: 'red',
-    marginBottom: 10,
-  },
-  socialButton: {
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,     
-    padding: 10,
-    marginHorizontal: 5,
-  },
-  socialIcon: {
-    width: 5,
-    height: 5,
+    marginBottom: 15,
   },
 });

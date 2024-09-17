@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, ImageBackground } from 'react-native';
 import { supabase } from '../supabase'; // Import your Supabase client
 
 const categories = ['All', 'Work', 'Personal', 'Shopping'];
@@ -35,100 +35,124 @@ export default function TaskCategories() {
     : tasks.filter(task => task.category === selectedCategory);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Task Categories</Text>
-      
-      <View style={styles.categoryContainer}>
-        {categories.map((category) => (
-          <TouchableOpacity
-            key={category}
-            style={[
-              styles.categoryButton,
-              selectedCategory === category && styles.selectedCategoryButton
-            ]}
-            onPress={() => setSelectedCategory(category)}
-          >
-            <Text
+    <ImageBackground
+      source={{ uri: 'https://static.vecteezy.com/system/resources/previews/027/105/997/non_2x/bright-adhesive-notes-on-cork-bulletin-board-free-photo.jpg' }}
+      style={styles.background}
+      imageStyle={{ opacity: 0.4 }} // Adjust transparency here
+    >
+      <View style={styles.container}>
+        <Text style={styles.header}>Task Categories</Text>
+        
+        <View style={styles.categoryContainer}>
+          {categories.map((category) => (
+            <TouchableOpacity
+              key={category}
               style={[
-                styles.categoryButtonText,
-                selectedCategory === category && styles.selectedCategoryButtonText
+                styles.categoryButton,
+                selectedCategory === category && styles.selectedCategoryButton
               ]}
+              onPress={() => setSelectedCategory(category)}
             >
-              {category}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              <Text
+                style={[
+                  styles.categoryButtonText,
+                  selectedCategory === category && styles.selectedCategoryButtonText
+                ]}
+              >
+                {category}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <Text style={styles.taskListHeader}>Tasks in {selectedCategory}</Text>
+
+        {filteredTasks.length > 0 ? (
+          <FlatList
+            data={filteredTasks}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.taskItem}>
+                <Text style={styles.taskTitle}>{item.text}</Text>
+              </View>
+            )}
+            contentContainerStyle={styles.taskListContainer} // Center the entire task list
+          />
+        ) : (
+          <Text style={styles.noTasksText}>No tasks in this category.</Text>
+        )}
       </View>
-
-      <Text style={styles.taskListHeader}>Tasks in {selectedCategory}</Text>
-
-      {filteredTasks.length > 0 ? (
-        <FlatList
-          data={filteredTasks}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.taskItem}>
-              <Text style={styles.taskTitle}>{item.text}</Text>
-            </View>
-          )}
-        />
-      ) : (
-        <Text style={styles.noTasksText}>No tasks in this category.</Text>
-      )}
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#99CC66',
+    backgroundColor: 'transparent', // Make container transparent to show the background image
   },
   header: {
-    fontSize: 60,
+    fontSize: 80,
     fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center', // Center the header text
   },
   categoryContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     marginBottom: 20,
   },
   categoryButton: {
     padding: 10,
     borderRadius: 8,
     backgroundColor: '#f0f0f0',
+    marginHorizontal: 10, // Adjust space between buttons
   },
   selectedCategoryButton: {
-    backgroundColor: '#1E90FF',
+    backgroundColor: 'red',
   },
   categoryButtonText: {
-    fontSize: 25,
+    fontSize: 38,
     color: '#333',
+    fontWeight: 'bold',
   },
   selectedCategoryButtonText: {
-    color: '#fff',
-    //width :50
+    color: '#ffffff', // White text for selected category button
+    textAlign: 'center',
   },
   taskListHeader: {
-    fontSize: 30,
+    fontSize: 65,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 30,
+    marginTop: 100,
+    color: 'red',
+    textAlign: 'center', // Center the task list header
+  },
+  taskListContainer: {
+    alignItems: 'center', // Center all task items horizontally
   },
   taskItem: {
     padding: 15,
     marginVertical: 5,
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#000000', // Background color for task items
     borderRadius: 8,
+    width: '110%', // Adjust width to fit better
+    alignItems: 'center', // Center content of each task item
   },
   taskTitle: {
-    fontSize: 25,
+    fontSize: 45,
     fontWeight: 'bold',
+    color: '#ffffff', // White text color
+    textAlign: 'center', // Center the task title
   },
   noTasksText: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 36,
+    color: '#000000',
     marginTop: 10,
+    textAlign: 'center', // Center the "No tasks" message
   },
 });
