@@ -2,21 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { supabase } from '../supabase'; // Adjust the path to your Supabase client
 
 export default function Profile() {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
-    // Fetch profile data from AsyncStorage
     const fetchProfileData = async () => {
       try {
         const storedName = await AsyncStorage.getItem('userName');
         const storedEmail = await AsyncStorage.getItem('userEmail');
+        const storedProfileImage = await AsyncStorage.getItem('profileImage');
+
         if (storedName) setName(storedName);
         if (storedEmail) setEmail(storedEmail);
+        if (storedProfileImage) setProfileImage(storedProfileImage);
       } catch (error) {
         console.error('Error loading profile data:', error);
       }
@@ -27,9 +32,37 @@ export default function Profile() {
 
   const handleSave = async () => {
     try {
-      // Save profile data to AsyncStorage
-      await AsyncStorage.setItem('userName', name);
-      await AsyncStorage.setItem('userEmail', email);
+      if (profileImage) {
+        // Upload the image to Supabase Storage
+        const fileName = profileImage.split('/').pop();
+        const fileExtension = fileName.split('.').pop();
+        const { data: uploadData, error: uploadError } = await supabase
+          .storage
+          .from('user_profiles')
+          .upload(`profile_images/${fileName}`, { uri: profileImage }, {
+            contentType: `image/${fileExtension}`,
+          });
+
+        if (uploadError) throw uploadError;
+
+        const { publicURL, error: publicURLError } = supabase
+          .storage
+          .from('user_profiles')
+          .getPublicUrl(`profile_images/${fileName}`);
+
+        if (publicURLError) throw publicURLError;
+
+        await AsyncStorage.setItem('profileImage', publicURL);
+
+        // Save profile data to AsyncStorage
+        await AsyncStorage.setItem('userName', name);
+        await AsyncStorage.setItem('userEmail', email);
+      } else {
+        // Save profile data to AsyncStorage without updating the image
+        await AsyncStorage.setItem('userName', name);
+        await AsyncStorage.setItem('userEmail', email);
+      }
+
       setEditing(false);
       Alert.alert('Profile updated!');
     } catch (error) {
@@ -39,20 +72,44 @@ export default function Profile() {
 
   const handleLogout = async () => {
     try {
-      await AsyncStorage.clear(); // Clear user data
-      navigation.replace('Login'); // Navigate to login screen
+      await AsyncStorage.removeItem('authToken');
+      navigation.replace('Login');
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
 
+  const handleSelectImage = () => {
+    const options = {
+      mediaType: 'photo',
+      quality: 1,
+    };
+
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorMessage) {
+        console.log('Image Picker Error: ', response.errorMessage);
+      } else if (response.assets && response.assets.length > 0) {
+        const selectedImage = response.assets[0].uri;
+        setProfileImage(selectedImage);
+      }
+    });
+  };
+
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: 'https://via.placeholder.com/150' }}
-        style={styles.profileImage}
-      />
-      
+      <TouchableOpacity onPress={handleSelectImage}>
+        <Image
+          source={
+            profileImage
+              ? { uri: profileImage }
+              : { uri: 'https://via.placeholder.com/150' }
+          }
+          style={styles.profileImage}
+        />
+      </TouchableOpacity>
+
       {editing ? (
         <>
           <TextInput
@@ -101,6 +158,8 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 75,
     marginBottom: 20,
+    borderWidth: 2,
+    borderColor: '#ccc',
   },
   name: {
     fontSize: 24,

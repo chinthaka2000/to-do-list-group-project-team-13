@@ -60,7 +60,7 @@ export default function TaskCategories() {
         ))}
       </View>
 
-      <Text style={styles.taskListHeader}>Tasks in "{selectedCategory}"</Text>
+      <Text style={styles.taskListHeader}>Tasks in {selectedCategory}</Text>
 
       {filteredTasks.length > 0 ? (
         <FlatList
@@ -83,10 +83,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#99CC66',
   },
   header: {
-    fontSize: 24,
+    fontSize: 60,
     fontWeight: 'bold',
     marginBottom: 20,
   },
@@ -104,14 +104,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#1E90FF',
   },
   categoryButtonText: {
-    fontSize: 16,
+    fontSize: 25,
     color: '#333',
   },
   selectedCategoryButtonText: {
     color: '#fff',
+    //width :50
   },
   taskListHeader: {
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   taskTitle: {
-    fontSize: 16,
+    fontSize: 25,
     fontWeight: 'bold',
   },
   noTasksText: {
