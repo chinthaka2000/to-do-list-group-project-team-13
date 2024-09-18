@@ -6,7 +6,6 @@ import { supabase } from './lib/supabase'; // Ensure the correct path to supabas
 import Login from './components/Login';
 import TodoList from './components/TodoList';
 import SplashScreen from './components/SplashScreen';
-import SettingsScreen from './components/SettingsScreen';
 import TaskCategories from './components/TaskCategories';
 import Profile from './components/Profile';
 import CalendarScreen from './components/CalendarScreen'; // Import CalendarScreen
@@ -28,7 +27,6 @@ function MyDrawer({ tasks }: { tasks: any[] }) {
           {(props) => <TodoList {...props} tasks={tasks} />}
         </Drawer.Screen>
         <Drawer.Screen name="Profile" component={Profile} />
-        <Drawer.Screen name="Settings" component={SettingsScreen} />
         <Drawer.Screen name="Task Categories">
           {(props) => <TaskCategories {...props} tasks={tasks} />}
         </Drawer.Screen>

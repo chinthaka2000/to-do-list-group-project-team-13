@@ -12,12 +12,7 @@ import { Session, User } from '@supabase/supabase-js';
 WebBrowser.maybeCompleteAuthSession();
 
 interface LoginProps {
-  route: {
-    params: {
-      themeColor?: string;
-    };
-  };
-  onLoginSuccess: (user: User) => void;
+    onLoginSuccess: (user: User) => void;
 }
 
 const { width, height } = Dimensions.get('window');
@@ -215,11 +210,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fff',
   },
   logo: {
     width: width * 0.25,  // Scale the logo based on screen width
-    height: width * 0.25,
+    height: width * 0.1,
     marginBottom: 20,
   },
   title: {
@@ -249,6 +244,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   forgotPassword: {
+color: '#6C63FF',
     alignSelf: 'flex-end',
   },
   buttonContainer: {

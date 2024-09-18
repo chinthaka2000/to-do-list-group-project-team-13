@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Alert, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { launchImageLibrary } from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker'; // Use expo-image-picker for Expo
 import { supabase } from '../supabase'; // Adjust the path to your Supabase client
 
 export default function Profile() {
@@ -33,14 +33,17 @@ export default function Profile() {
   const handleSave = async () => {
     try {
       if (profileImage) {
+        // Convert image URI to Blob
+        const response = await fetch(profileImage);
+        const blob = await response.blob();
+
         // Upload the image to Supabase Storage
         const fileName = profileImage.split('/').pop();
-        const fileExtension = fileName.split('.').pop();
         const { data: uploadData, error: uploadError } = await supabase
           .storage
           .from('user_profiles')
-          .upload(`profile_images/${fileName}`, { uri: profileImage }, {
-            contentType: `image/${fileExtension}`,
+          .upload(`profile_images/${fileName}`, blob, {
+            contentType: 'image/jpeg', // Adjust content type if necessary
           });
 
         if (uploadError) throw uploadError;
@@ -79,22 +82,23 @@ export default function Profile() {
     }
   };
 
-  const handleSelectImage = () => {
-    const options = {
-      mediaType: 'photo',
-      quality: 1,
-    };
+  const handleSelectImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permission needed', 'We need permission to access your camera roll.');
+      return;
+    }
 
-    launchImageLibrary(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.errorMessage) {
-        console.log('Image Picker Error: ', response.errorMessage);
-      } else if (response.assets && response.assets.length > 0) {
-        const selectedImage = response.assets[0].uri;
-        setProfileImage(selectedImage);
-      }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+
+    if (!result.canceled) {
+      setProfileImage(result.uri);
+    }
   };
 
   return (
