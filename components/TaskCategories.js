@@ -39,9 +39,9 @@ export default function TaskCategories() {
 
   return (
     <ImageBackground
-      source={{ uri: 'https://static.vecteezy.com/system/resources/previews/027/105/997/non_2x/bright-adhesive-notes-on-cork-bulletin-board-free-photo.jpg' }}
+      source={{ uri: 'https://wallpapercave.com/wp/JDlmniF.jpg' }}
       style={styles.background}
-      imageStyle={{ opacity: 0.4 }} // Adjust transparency here
+      //imageStyle={{ opacity: 0.4 }} // Adjust transparency here
     >
       <View style={styles.container}>
         <Text style={styles.header}>Task Categories</Text>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: 'transparent', // Make container transparent to show the background image
+    //backgroundColor: 'transparent', // Make container transparent to show the background image
   },
   header: {
     fontSize: 80,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     backgroundColor: '#000000',
     borderRadius: 8,
-    width: width * 0.7, // Set width to 90% of screen width for uniformity
+    width: width * 0.5, // Set width to 90% of screen width for uniformity
     alignItems: 'center', // Center content of each task item
   },
   taskTitle: {

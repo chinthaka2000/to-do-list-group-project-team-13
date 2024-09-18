@@ -105,9 +105,8 @@ export default function CalendarScreen() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={{ uri:"https://static.vecteezy.com/system/resources/previews/027/105/997/non_2x/bright-adhesive-notes-on-cork-bulletin-board-free-photo.jpg" }}
+        source={{ uri:"https://wallpapercave.com/wp/JDlmniF.jpg" }}
         style={styles.imageBackground}
-        imageStyle={{ opacity: 0.4 }} // Adjust transparency here
       >
         <View style={styles.calendarWrapper}>
           <Calendar
@@ -181,7 +180,6 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1, // Full screen height
-    backgroundColor: 'transparent',
   },
   imageBackground: {
     flex: 1, // Ensures the background image covers the whole screen
@@ -206,6 +204,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     marginVertical: 15,
+    color:'#ffffff',
   },
   taskListContainer: {
     flex: 1, // Make the task list container take available space
@@ -218,7 +217,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     marginVertical: 5,
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#ffffff',
     borderRadius: 8,
   },
   taskTextContainer: {
@@ -252,7 +251,7 @@ const styles = StyleSheet.create({
   },
   noTasksText: {
     fontSize: 35,
-    color: '#000000',
+    color: '#ffffff',
     marginTop: 10,
     fontWeight: 'bold',
     textAlign: 'center', // Center the text
@@ -263,7 +262,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderColor: '#ccc',
-    borderWidth: 1,
+    borderWidth: 3,
     padding: 10, // Increase padding for more space inside the input box
     marginBottom: 10,
     borderRadius: 5,
@@ -271,6 +270,7 @@ const styles = StyleSheet.create({
     height: 40, // Increase height of the input box
     alignSelf:'center',
     fontWeight: 'bold',
-    fontSize:20,
+    fontSize:30,
+    color:'#ffffff',
   },
 });

@@ -122,9 +122,9 @@ const TodoList = () => {
 
   return (
     <ImageBackground
-      source={{ uri: 'https://static.vecteezy.com/system/resources/previews/027/105/997/non_2x/bright-adhesive-notes-on-cork-bulletin-board-free-photo.jpg' }}
+      source={{ uri: 'https://wallpapercave.com/wp/JDlmniF.jpg' }}
       style={styles.background}
-      imageStyle={{ opacity: 0.3 }} // Adjust transparency here
+      //imageStyle={{ opacity: 0.4 }} // Adjust transparency here
     >
       <View style={styles.container}>
         {/* Category Filter */}
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: 'transparent', // Make background transparent so image shows through
+   // backgroundColor: 'transparent', // Make background transparent so image shows through
   },
   background: {
     flex: 1,

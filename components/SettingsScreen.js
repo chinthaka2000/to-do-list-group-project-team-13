@@ -41,9 +41,9 @@ const SettingsScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={{ uri: 'https://static.vecteezy.com/system/resources/previews/027/105/997/non_2x/bright-adhesive-notes-on-cork-bulletin-board-free-photo.jpg' }}
+      source={{ uri: 'https://cdn.pixabay.com/photo/2021/07/01/07/02/laptop-6378451_1280.jpg' }}
       style={styles.background}
-      imageStyle={{ opacity: 0.3 }} // Adjust transparency here
+      imageStyle={{ opacity: 0.1 }} // Adjust transparency here
     >
       <View style={styles.content}>
         <View style={styles.notificationContainer}>

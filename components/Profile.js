@@ -103,9 +103,9 @@ export default function Profile() {
 
   return (
     <ImageBackground
-      source={{ uri: 'https://static.vecteezy.com/system/resources/previews/027/105/997/non_2x/bright-adhesive-notes-on-cork-bulletin-board-free-photo.jpg' }}
+      source={{ uri: 'https://wallpapercave.com/wp/JDlmniF.jpg' }}
       style={styles.background}
-      imageStyle={{ opacity: 0.3 }} // Adjust the opacity for transparency
+      //imageStyle={{ opacity: 0.4 }} // Adjust the opacity for transparency
     >
       <View style={styles.container}>
         <TouchableOpacity onPress={handleSelectImage}>
