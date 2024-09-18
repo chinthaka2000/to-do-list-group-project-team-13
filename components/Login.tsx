@@ -12,9 +12,6 @@ import { Session, User } from '@supabase/supabase-js';
 WebBrowser.maybeCompleteAuthSession();
 
 interface LoginProps {
-  route: {
-    params: {
-      themeColor?: string;
     };
   };
   onLoginSuccess: (user: User) => void;
