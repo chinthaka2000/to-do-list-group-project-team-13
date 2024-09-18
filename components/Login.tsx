@@ -213,7 +213,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
 <<<<<<< HEAD
+<<<<<<< HEAD
     backgroundColor: '#fff',
+=======
+    backgroundColor: '#FFFFFF',
+>>>>>>> parent of 33e279e (updated)
 =======
     backgroundColor: '#FFFFFF',
 >>>>>>> parent of 33e279e (updated)
