@@ -169,9 +169,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
+    width: 400,
+    height: 400,
+    borderRadius: 200,
     marginBottom: 20,
     borderWidth: 2,
     borderColor: '#ccc',

@@ -230,23 +230,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   saveButton: {
-    backgroundColor: '#4682B4',
+    backgroundColor: '#ffff00',
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
   },
   saveButtonText: {
-    color: '#fff',
+    color: '#000000',
     fontWeight: 'bold',
   },
   deleteButton: {
-    backgroundColor: '#FF6347',
+    backgroundColor: 'red',
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
   },
   deleteButtonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontWeight: 'bold',
   },
   noTasksText: {
@@ -265,12 +265,13 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     padding: 10, // Increase padding for more space inside the input box
     marginBottom: 10,
-    borderRadius: 5,
+    borderRadius: 8,
     width: '200%', // Make input box full width of the container
     height: 40, // Increase height of the input box
     alignSelf:'center',
     fontWeight: 'bold',
     fontSize:30,
-    color:'#ffffff',
+    color:'#000000',
+    backgroundColor:'#ffff00',
   },
 });

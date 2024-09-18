@@ -41,12 +41,11 @@ export default function TaskCategories() {
     <ImageBackground
       source={{ uri: 'https://wallpapercave.com/wp/JDlmniF.jpg' }}
       style={styles.background}
-      //imageStyle={{ opacity: 0.4 }} // Adjust transparency here
     >
       <View style={styles.container}>
-        <Text style={styles.header}>Task Categories</Text>
-        
+        {/* Left side for Categories */}
         <View style={styles.categoryContainer}>
+          <Text style={styles.header}>Task Categories</Text>
           {categories.map((category) => (
             <TouchableOpacity
               key={category}
@@ -68,22 +67,25 @@ export default function TaskCategories() {
           ))}
         </View>
 
-        <Text style={styles.taskListHeader}>Tasks in {selectedCategory}</Text>
+        {/* Right side for Tasks */}
+        <View style={styles.taskContainer}>
+          <Text style={styles.taskListHeader}>Tasks in {selectedCategory}</Text>
 
-        {filteredTasks.length > 0 ? (
-          <FlatList
-            data={filteredTasks}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.taskItem}>
-                <Text style={styles.taskTitle}>{item.text}</Text>
-              </View>
-            )}
-            contentContainerStyle={styles.taskListContainer} // Center the entire task list
-          />
-        ) : (
-          <Text style={styles.noTasksText}>No tasks in this category.</Text>
-        )}
+          {filteredTasks.length > 0 ? (
+            <FlatList
+              data={filteredTasks}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <View style={styles.taskItem}>
+                  <Text style={styles.taskTitle}>{item.text}</Text>
+                </View>
+              )}
+              contentContainerStyle={styles.taskListContainer}
+            />
+          ) : (
+            <Text style={styles.noTasksText}>No tasks in this category.</Text>
+          )}
+        </View>
       </View>
     </ImageBackground>
   );
@@ -95,67 +97,71 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    flexDirection: 'row', // Make the main container a row
     padding: 20,
-    //backgroundColor: 'transparent', // Make container transparent to show the background image
   },
   header: {
-    fontSize: 80,
+    fontSize: 50,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center', // Center the header text
+    textAlign: 'center',
+    color:'#ffffff',
   },
   categoryContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginBottom: 20,
+    width: width * 0.3, // 30% of screen width
+    paddingRight: 60, // Add some spacing between categories and tasks
   },
   categoryButton: {
     padding: 10,
     borderRadius: 8,
     backgroundColor: '#f0f0f0',
-    marginHorizontal: 10, // Adjust space between buttons
+    marginVertical: 10,
   },
   selectedCategoryButton: {
-    backgroundColor: 'red',
+    backgroundColor: 'yellow',
   },
   categoryButtonText: {
-    fontSize: 38,
+    fontSize: 30,
     color: '#333',
     fontWeight: 'bold',
   },
   selectedCategoryButtonText: {
-    color: '#ffffff', // White text for selected category button
+    color: '#000000', // White text for selected category button
     textAlign: 'center',
   },
+  taskContainer: {
+    width: width * 0.7, // 70% of screen width
+    paddingLeft: 60, // Add some spacing
+  },
   taskListHeader: {
-    fontSize: 65,
+    fontSize: 50,
     fontWeight: 'bold',
-    marginBottom: 30,
-    marginTop: 100,
-    color: 'red',
-    textAlign: 'center', // Center the task list header
+    marginBottom: 20,
+    textAlign: 'center',
+    color:'#ffffff',
   },
   taskListContainer: {
-    alignItems: 'center', // Center all task items horizontally
+    alignItems: 'center',
   },
   taskItem: {
     padding: 15,
     marginVertical: 5,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffff00',
     borderRadius: 8,
-    width: width * 0.5, // Set width to 90% of screen width for uniformity
-    alignItems: 'center', // Center content of each task item
+    width: width * 0.6, // Set width relative to task container
+    alignItems: 'center',
   },
   taskTitle: {
-    fontSize: 45,
+    fontSize: 30,
     fontWeight: 'bold',
-    color: '#ffffff',
-    textAlign: 'center', // Center the task title
+    color: '#000000',
+    textAlign: 'center',
   },
   noTasksText: {
-    fontSize: 36,
-    color: '#000000',
+    fontSize: 30,
+    color: 'red',
     marginTop: 10,
-    textAlign: 'center', // Center the "No tasks" message
+    textAlign: 'center',
+    fontWeight:'bold',
   },
 });
