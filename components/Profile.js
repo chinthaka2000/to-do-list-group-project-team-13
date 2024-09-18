@@ -42,7 +42,7 @@ export default function Profile() {
         const { data: uploadData, error: uploadError } = await supabase
           .storage
           .from('user_profiles')
-          .upload(`profile_images/${fileName}`, blob, {
+          .upload(`pics/${fileName}`, blob, {
             contentType: 'image/jpeg', // Adjust content type if necessary
           });
 
