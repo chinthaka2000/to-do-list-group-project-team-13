@@ -138,7 +138,7 @@ const Login: React.FC<LoginProps> = ({ route, onLoginSuccess }) => {
   );
 
   // Retrieve the theme color from route params or use a default value
-  const themeColor = route.params?.themeColor || '#6C63FF';
+  const themeColor = route.params?.themeColor || '#ffffff';
 
   return (
     <Animated.View style={[styles.container, { opacity: fadeAnim, backgroundColor: themeColor }]}>
@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#FFFFFF',
   },
   logo: {
     width: width * 0.25,  // Scale the logo based on screen width
@@ -274,7 +275,7 @@ const styles = StyleSheet.create({
   },
   socialButton: {
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 5,
