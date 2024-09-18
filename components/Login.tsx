@@ -211,11 +211,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
     backgroundColor: '#fff',
->>>>>>> Stashed changes
   },
   logo: {
     width: width * 0.25,  // Scale the logo based on screen width
-    height: width * 0.25,
+    height: width * 0.1,
     marginBottom: 20,
   },
   title: {
