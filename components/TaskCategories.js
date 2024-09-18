@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, ImageBackground, Dimensions } from 'react-native';
 import { supabase } from '../supabase'; // Import your Supabase client
 
 const categories = ['All', 'Work', 'Personal', 'Shopping'];
+
+// Get the screen's width
+const { width } = Dimensions.get('window');
 
 export default function TaskCategories() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -138,15 +141,15 @@ const styles = StyleSheet.create({
   taskItem: {
     padding: 15,
     marginVertical: 5,
-    backgroundColor: '#000000', // Background color for task items
+    backgroundColor: '#000000',
     borderRadius: 8,
-    width: '110%', // Adjust width to fit better
+    width: width * 0.7, // Set width to 90% of screen width for uniformity
     alignItems: 'center', // Center content of each task item
   },
   taskTitle: {
     fontSize: 45,
     fontWeight: 'bold',
-    color: '#ffffff', // White text color
+    color: '#ffffff',
     textAlign: 'center', // Center the task title
   },
   noTasksText: {
