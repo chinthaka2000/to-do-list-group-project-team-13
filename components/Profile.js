@@ -51,7 +51,7 @@ export default function Profile() {
         const { publicURL, error: publicURLError } = supabase
           .storage
           .from('user_profiles')
-          .getPublicUrl(`profile_images/${fileName}`);
+          .getPublicUrl(`pics/${fileName}`); // Corrected path to match upload
 
         if (publicURLError) throw publicURLError;
 
@@ -105,7 +105,6 @@ export default function Profile() {
     <ImageBackground
       source={{ uri: 'https://wallpapercave.com/wp/JDlmniF.jpg' }}
       style={styles.background}
-      //imageStyle={{ opacity: 0.4 }} // Adjust the opacity for transparency
     >
       <View style={styles.container}>
         <TouchableOpacity onPress={handleSelectImage}>
@@ -164,9 +163,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    width: '100%',
+    width: '50%',
     alignItems: 'center',
     borderRadius: 10,
+  
   },
   profileImage: {
     width: 400,
@@ -177,42 +177,53 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
   },
   name: {
-    fontSize: 24,
+    fontSize: 54,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   email: {
-    fontSize: 18,
-    color: '#666',
+    fontSize: 58,
+    fontWeight: 'bold',
     marginBottom: 20,
   },
   input: {
+    fontSize: 38,
+    fontWeight: 'bold',
     width: '100%',
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
     marginBottom: 15,
+    backgroundColor:'#ffffff',
   },
   editButton: {
-    backgroundColor: '#1E90FF',
-    padding: 12,
+    backgroundColor: '#ffff00',
+    padding: 15, // Increased padding
     borderRadius: 8,
     marginBottom: 15,
+    width: '30%', // Full width
+    alignItems: 'center',
   },
   saveButton: {
-    backgroundColor: '#4CAF50',
-    padding: 12,
+    backgroundColor: '#ffff00',
+    padding: 15, // Increased padding
     borderRadius: 8,
     marginBottom: 15,
+    width: '100%', // Full width
+    alignItems: 'center',
   },
   logoutButton: {
-    backgroundColor: '#FF6347',
-    padding: 12,
+    backgroundColor: 'red',
+    padding: 15, // Increased padding
     borderRadius: 8,
+    width: '30%', // Full width
+    alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 18,
+    color: '#000000',
+    fontSize: 28,
+    fontWeight:'bold'
+
   },
 });

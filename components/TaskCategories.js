@@ -108,8 +108,9 @@ const styles = StyleSheet.create({
     color:'#ffffff',
   },
   categoryContainer: {
-    width: width * 0.3, // 30% of screen width
+    width: width * 0.4, // 30% of screen width
     paddingRight: 60, // Add some spacing between categories and tasks
+    borderRadius: 8,
   },
   categoryButton: {
     padding: 10,
@@ -130,8 +131,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   taskContainer: {
-    width: width * 0.7, // 70% of screen width
+    width: width * 0.5, // 70% of screen width
     paddingLeft: 60, // Add some spacing
+    borderRadius: 8,
   },
   taskListHeader: {
     fontSize: 50,
@@ -142,6 +144,7 @@ const styles = StyleSheet.create({
   },
   taskListContainer: {
     alignItems: 'center',
+    borderRadius: 8,
   },
   taskItem: {
     padding: 15,

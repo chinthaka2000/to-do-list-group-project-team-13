@@ -208,11 +208,11 @@ const TodoItem = ({ task, deleteTask, toggleCompleted, editTask }) => {
         <Text style={[styles.itemText, task.completed && styles.completed]}>{task.text}</Text>
       </TouchableOpacity>
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity onPress={() => editTask(task)}>
-          <Ionicons name="create-outline" size={24} color="blue" />
+        <TouchableOpacity onPress={() => editTask(task)} style={styles.editButton}>
+          <Ionicons name="create-outline" size={46} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => deleteTask(task.id)}>
-          <Ionicons name="trash-outline" size={24} color="red" />
+        <TouchableOpacity onPress={() => deleteTask(task.id)} >
+          <Ionicons name="trash-outline" size={46} color="red" />
         </TouchableOpacity>
       </View>
     </View>
@@ -224,7 +224,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-   // backgroundColor: 'transparent', // Make background transparent so image shows through
   },
   background: {
     flex: 1,
@@ -233,20 +232,23 @@ const styles = StyleSheet.create({
   categoryContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 15,
+    marginBottom: 10,
   },
   categoryButton: {
     padding: 10,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#ffff00',
     borderRadius: 8,
+    color:'#000000',
   },
   activeCategory: {
-    padding: 10,
-    backgroundColor: '#1E90FF',
+    padding: 35,
+    backgroundColor: 'red',
     borderRadius: 8,
   },
   categoryText: {
-    color: '#fff',
+    color: '#000000',
+    fontSize:36,
+    fontWeight:'bold',
   },
   itemContainer: {
     flexDirection: 'row',
@@ -255,9 +257,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
+    width: 1200,
+    alignSelf:'center',
   },
   itemText: {
-    fontSize: 16,
+    fontSize: 36,
+    color:'#ffffff',
   },
   completed: {
     textDecorationLine: 'line-through',
@@ -265,19 +270,21 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: 'row',
+    marginLeft: 30,
   },
   editButton: {
     color: '#1E90FF',
     marginRight: 10,
+    justifyContent: 'flex start',
   },
   deleteButton: {
-    color: '#FF6347',
+    color: 'red',
   },
   plusButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#1E90FF',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
@@ -301,40 +308,52 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   plusButtonText: {
-    color: '#fff',
+    color: '#000000',
     fontSize: 24,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    width: '65%',
+    alignSelf:'center',
+    backgroundColor:'white',
+
   },
   textInput: {
     flex: 1,
-    height: 40,
-    borderColor: '#1E90FF',
+    height: 80,
+    borderColor: '#ffffff',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
     marginRight: 10,
+    color:'#000000',
+    fontWeight:'bold',
+    fontSize:30,
   },
   addButton: {
     backgroundColor: '#1E90FF',
     padding: 10,
     borderRadius: 8,
+    color:'#ffffff',
   },
   addButtonText: {
     color: '#fff',
+    width:70,
+    height:25,
   },
   closeButton: {
     marginLeft: 10,
-    backgroundColor: '#FF6347',
+    backgroundColor: 'red',
     padding: 10,
     borderRadius: 8,
+    width:90,
+    height:45,
   },
   closeButtonText: {
     color: '#fff',
+    fontWeight:'bold',
   },
   deleteAllButton: {
     marginTop: 20,
@@ -344,14 +363,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    width: 200,
-    height: 50,
+    width: 400,
+    height: 100,
     marginBottom: 20,
   },
   deleteAllButtonText: {
     color: '#fffaf0',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 36,
   },
 });
 
