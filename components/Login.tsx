@@ -25,10 +25,10 @@ const Login: React.FC<LoginProps> = ({ route, onLoginSuccess }) => {
     const [fadeAnim] = useState(new Animated.Value(0));
 
     const [request, response, promptAsync] = Google.useAuthRequest({
-        expoClientId: 'YOUR_EXPO_CLIENT_ID',
-        iosClientId: 'YOUR_IOS_CLIENT_ID',
-        androidClientId: 'YOUR_ANDROID_CLIENT_ID',
-        webClientId: 'YOUR_WEB_CLIENT_ID',
+    expoClientId: '756581067417-d6oik28q886mr6kseqa5fe2l08gc5j0j.apps.googleusercontent.com',
+    iosClientId: '756581067417-ijkvf1lli9c5t1saate0q3jjtdopqr1h.apps.googleusercontent.com',
+    androidClientId: '756581067417-ia3nl78tfoo7idtrn34p5osmsv6oc69i.apps.googleusercontent.com',
+    webClientId: '756581067417-d6oik28q886mr6kseqa5fe2l08gc5j0j.apps.googleusercontent.com',
     });
 
     useEffect(() => {
@@ -206,8 +206,8 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     logo: {
-        width: width * 0.15,
-        height: width * 0.15,
+        width: width * 0.1,
+        height: width * 0.1,
         marginBottom: 20,
     },
     title: {
@@ -271,7 +271,8 @@ const styles = StyleSheet.create({
         width: '50%',
     },
     socialButton: {
-        padding: 10,
+        padding:0,
+        margin: 0,
         backgroundColor: '#000000',
         borderWidth: 1,
         borderColor: '#FFFFFF',
@@ -284,6 +285,9 @@ const styles = StyleSheet.create({
     socialIcon: {
         width: 24,
         height: 24,
+        resizeMode: 'contain',
+        padding:0,
+        margin: 0,
     },
     signupContainer: {
         flexDirection: 'row',

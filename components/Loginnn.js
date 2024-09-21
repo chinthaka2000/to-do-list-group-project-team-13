@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, Image, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, ActivityIndicator, Image, StyleSheet, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as EmailValidator from 'email-validator';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,6 +9,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { supabase } from '../supabase'; // Ensure this path is correct
 
 WebBrowser.maybeCompleteAuthSession();
+
+const { width, height } = Dimensions.get('window');
 
 export default function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
@@ -94,7 +96,6 @@ export default function Login({ onLoginSuccess }) {
     }
   };
 
-  // Function to handle forgot password
   const handleForgotPassword = async () => {
     if (!EmailValidator.validate(email)) {
       setError('Please enter a valid email to reset your password');
@@ -202,11 +203,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
-    //backgroundColor: '#fff',
+    backgroundColor: '#fff',
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 0.2 * 0.1, // Adjusted size to fit the screen
+    height: 0.2 * 0.1, // Adjusted size to fit the screen
     marginBottom: 20,
   },
   title: {
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: '#7f8fa6',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -261,17 +262,17 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   orText: {
-    marginVertical: 20,
-    color: '#666',
+    color: '#7f8fa6',
+    marginBottom: 10,
   },
   socialButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   socialButton: {
-    marginHorizontal: 10,
     padding: 10,
+    marginHorizontal: 10,
   },
   socialIcon: {
     width: 24,
@@ -282,16 +283,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signupText: {
-    color: '#666',
+    color: '#7f8fa6',
   },
   signupLink: {
     color: '#6C63FF',
+    fontWeight: 'bold',
   },
   disabledText: {
-    opacity: 0.7,
-  },
-  error: {
-    color: 'red',
-    marginBottom: 15,
+    opacity: 0.6,
   },
 });

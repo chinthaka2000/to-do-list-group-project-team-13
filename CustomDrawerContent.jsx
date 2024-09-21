@@ -1,22 +1,46 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-import { supabase } from './lib/supabase'; // Ensure the correct path to supabase client
+import { supabase } from './supabase'; // Ensure the correct path to supabase client
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomDrawerContent = (props) => {
+  const [email, setEmail] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState('https://via.placeholder.com/100');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (error) {
+          Alert.alert('Error', error.message);
+          return;
+        }
+        if (user) {
+          setEmail(user.email);
+          const profileUrl = user.user_metadata?.profile_image_url || 'https://via.placeholder.com/100';
+          setProfileImageUrl(profileUrl);
+        }
+      } catch (err) {
+        console.error('Error fetching user data:', err.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
-      // Navigate to login screen or handle post-logout actions
-      props.navigation.navigate('Login');
+      await AsyncStorage.removeItem('user'); // Remove user from local storage
+      props.navigation.navigate('Login'); // Navigate to login screen
     } catch (error) {
-      console.error('Logout error:', error.message);
+      Alert.alert('Logout error', error.message);
     }
   };
 
   const handleEditProfile = () => {
-    // Navigate to Edit Profile screen or handle edit profile functionality
-    props.navigation.navigate('Profile');
+    props.navigation.navigate('Profile'); // Navigate to the Profile screen
   };
 
   return (
@@ -24,12 +48,11 @@ const CustomDrawerContent = (props) => {
       <DrawerContentScrollView {...props}>
         <View style={styles.profileSection}>
           <Image
-            source={{ uri: 'https://via.placeholder.com/100' }} // Replace with actual profile photo URL
+            source={{ uri: profileImageUrl }} // Profile photo URL from user data
             style={styles.profilePhoto}
           />
           <View style={styles.profileDetails}>
-            <Text style={styles.profileText}>{}</Text>
-            <Text style={styles.profileEmail}>john.doe@example.com</Text>
+            <Text style={styles.profileEmail}>{email}</Text>
             <TouchableOpacity style={styles.editButton} onPress={handleEditProfile}>
               <Text style={styles.buttonText}>Edit Profile</Text>
             </TouchableOpacity>
@@ -67,10 +90,6 @@ const styles = StyleSheet.create({
   profileDetails: {
     flex: 1,
   },
-  profileText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
   profileEmail: {
     fontSize: 14,
     color: '#666',
@@ -84,6 +103,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
+    textAlign: 'center',
   },
   footer: {
     padding: 16,

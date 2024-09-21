@@ -235,13 +235,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   categoryButton: {
-    padding: 10,
+    padding: 7,
     backgroundColor: '#ffff00',
     borderRadius: 8,
     color:'#000000',
   },
   activeCategory: {
-    padding: 35,
+    padding: 7,
     backgroundColor: 'red',
     borderRadius: 8,
   },
