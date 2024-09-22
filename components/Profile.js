@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Alert, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as ImagePicker from 'expo-image-picker'; // Use expo-image-picker for Expo
-import { supabase } from '../supabase'; // Adjust the path to your Supabase client
+import * as ImagePicker from 'expo-image-picker'; 
+import { supabase } from '../supabase'; 
 
 export default function Profile() {
   const [editing, setEditing] = useState(false);
@@ -33,17 +33,15 @@ export default function Profile() {
   const handleSave = async () => {
     try {
       if (profileImage) {
-        // Convert image URI to Blob
         const response = await fetch(profileImage);
         const blob = await response.blob();
 
-        // Upload the image to Supabase Storage
         const fileName = profileImage.split('/').pop();
         const { data: uploadData, error: uploadError } = await supabase
           .storage
           .from('user_profiles')
           .upload(`pics/${fileName}`, blob, {
-            contentType: 'image/jpeg', // Adjust content type if necessary
+            contentType: 'image/jpeg', 
           });
 
         if (uploadError) throw uploadError;
@@ -51,17 +49,15 @@ export default function Profile() {
         const { publicURL, error: publicURLError } = supabase
           .storage
           .from('user_profiles')
-          .getPublicUrl(`pics/${fileName}`); // Corrected path to match upload
+          .getPublicUrl(`pics/${fileName}`); 
 
         if (publicURLError) throw publicURLError;
 
         await AsyncStorage.setItem('profileImage', publicURL);
 
-        // Save profile data to AsyncStorage
         await AsyncStorage.setItem('userName', name);
         await AsyncStorage.setItem('userEmail', email);
       } else {
-        // Save profile data to AsyncStorage without updating the image
         await AsyncStorage.setItem('userName', name);
         await AsyncStorage.setItem('userEmail', email);
       }
@@ -97,7 +93,7 @@ export default function Profile() {
     });
 
     if (!result.canceled) {
-      setProfileImage(result.uri);
+      setProfileImage(result.assets[0].uri); 
     }
   };
 
@@ -111,8 +107,8 @@ export default function Profile() {
           <Image
             source={
               profileImage
-                ? { uri: profileImage }
-                : { uri: 'https://via.placeholder.com/150' }
+                ? { uri: profileImage } 
+                : { uri: 'https://via.placeholder.com/150' } 
             }
             style={styles.profileImage}
           />
@@ -166,7 +162,6 @@ const styles = StyleSheet.create({
     width: '50%',
     alignItems: 'center',
     borderRadius: 10,
-  
   },
   profileImage: {
     width: 400,
@@ -195,35 +190,34 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 8,
     marginBottom: 15,
-    backgroundColor:'#ffffff',
+    backgroundColor: '#ffffff',
   },
   editButton: {
     backgroundColor: '#ffff00',
-    padding: 15, // Increased padding
+    padding: 15, 
     borderRadius: 8,
     marginBottom: 15,
-    width: '30%', // Full width
+    width: '30%', 
     alignItems: 'center',
   },
   saveButton: {
     backgroundColor: '#ffff00',
-    padding: 15, // Increased padding
+    padding: 15, 
     borderRadius: 8,
     marginBottom: 15,
-    width: '100%', // Full width
+    width: '100%', 
     alignItems: 'center',
   },
   logoutButton: {
     backgroundColor: 'red',
-    padding: 15, // Increased padding
+    padding: 15, 
     borderRadius: 8,
-    width: '30%', // Full width
+    width: '30%', 
     alignItems: 'center',
   },
   buttonText: {
     color: '#000000',
     fontSize: 28,
-    fontWeight:'bold'
-
+    fontWeight: 'bold',
   },
 });
