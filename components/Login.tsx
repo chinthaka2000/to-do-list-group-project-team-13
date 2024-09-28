@@ -30,7 +30,7 @@ const Login: React.FC<LoginProps> = ({ route, onLoginSuccess }) => {
     androidClientId: '756581067417-ia3nl78tfoo7idtrn34p5osmsv6oc69i.apps.googleusercontent.com',
     webClientId: '756581067417-d6oik28q886mr6kseqa5fe2l08gc5j0j.apps.googleusercontent.com',
     });
-
+//use effects
     useEffect(() => {
         if (response?.type === 'success') {
             handleGoogleLoginSuccess(response.authentication);
@@ -109,7 +109,7 @@ const Login: React.FC<LoginProps> = ({ route, onLoginSuccess }) => {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={[styles.gradientButton, { opacity: disabled ? 0.7 : 1 }]}
-            >
+                >
                 <Text style={styles.buttonText}>{text}</Text>
             </LinearGradient>
         </TouchableOpacity>
